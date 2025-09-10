@@ -28,5 +28,6 @@ class CheckMacro
 		#if (lime < version("8.0.1"))
 		Context.fatalError('The hxvlc library requires Lime version 8.0.1 or newer. Please update Lime by running `haxelib update lime`.', (macro null).pos);
 		#end
+	}
 }
 #end
