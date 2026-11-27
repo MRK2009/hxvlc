@@ -52,14 +52,14 @@ jobs:
           haxelib install hscript --quiet --never --skip-dependencies
 
       - name: Setup hxcpp Library
-        run: haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git --quiet --never --skip-dependencies && haxelib run lime rebuild hxcpp
+        run: haxelib git hxcpp https://github.com/MRK2009/hxcpp.git fix-c++20 --quiet --never --skip-dependencies && haxelib run lime rebuild hxcpp
 
       - name: List Installed Haxe Libraries
         run: haxelib list
 
       - name: Build Windows
         if: matrix.os == 'windows'
-        run: cd samples/${{matrix.sample}} && haxelib run lime build windows
+        run: cd samples/${{matrix.sample}} && haxelib run lime build windows -D HXCPP_CXX_STANDARD=20
 
       - name: Upload Windows Artifact
         if: matrix.os == 'windows'
@@ -71,7 +71,7 @@ jobs:
 
       - name: Build MacOS
         if: matrix.os == 'macos'
-        run: cd samples/${{matrix.sample}} && haxelib run lime build mac && tar -zcf build.tar.gz -C export/macos/bin .
+        run: cd samples/${{matrix.sample}} && haxelib run lime build mac -D HXCPP_CXX_STANDARD=20 && tar -zcf build.tar.gz -C export/macos/bin .
 
       - name: Upload MacOS Artifact
         if: matrix.os == 'macos'
@@ -83,7 +83,7 @@ jobs:
 
       - name: Build Linux
         if: matrix.os == 'ubuntu'
-        run: cd samples/${{matrix.sample}} && haxelib run lime build linux && tar -zcf build.tar.gz -C export/linux/bin .
+        run: cd samples/${{matrix.sample}} && haxelib run lime build linux -D HXCPP_CXX_STANDARD=20 && tar -zcf build.tar.gz -C export/linux/bin .
 
       - name: Upload Linux Artifact
         if: matrix.os == 'ubuntu'
@@ -122,7 +122,7 @@ jobs:
           haxelib install hscript --quiet --never --skip-dependencies
 
       - name: Setup hxcpp Library
-        run: haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git --quiet --never --skip-dependencies && haxelib run lime rebuild hxcpp
+        run: haxelib git hxcpp https://github.com/MRK2009/hxcpp.git fix-c++20 --quiet --never --skip-dependencies && haxelib run lime rebuild hxcpp
 
       - name: List Installed Haxe Libraries
         run: haxelib list
@@ -137,7 +137,7 @@ jobs:
 
       - name: Build Android
         if: matrix.os == 'android'
-        run: cd samples/${{matrix.sample}} && haxelib run lime build android
+        run: cd samples/${{matrix.sample}} && haxelib run lime build android -D HXCPP_CXX_STANDARD=20
 
       - name: Upload Android Artifact
         if: matrix.os == 'android'
@@ -149,7 +149,7 @@ jobs:
 
       - name: Build iOS
         if: matrix.os == 'ios'
-        run: cd samples/${{matrix.sample}} && haxelib run lime build ios -nosign
+        run: cd samples/${{matrix.sample}} && haxelib run lime build ios -nosign -D HXCPP_CXX_STANDARD=20
 
       - name: Create iOS IPA
         if: matrix.os == 'ios'
